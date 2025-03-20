@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">AroundMe</string>
+
+    <!-- Categories for filtering -->
+    <string-array name="category_options">
+        <item>All</item>
+        <item>Sports</item>
+        <item>Music</item>
+        <item>Technology</item>
+        <item>Food</item>
+        <item>Networking</item>
+    </string-array>
 </resources>
