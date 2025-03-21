@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/post_title_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter post title"/>
+
+    <EditText
+        android:id="@+id/post_description_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter post description"
+        android:inputType="textMultiLine"
+        android:minLines="3"/>
+
+    <TextView
+        android:id="@+id/location_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Location: Not Selected"
+        android:paddingTop="8dp"/>
+
+    <Button
+        android:id="@+id/select_location_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Location"/>
+
+    <Button
+        android:id="@+id/save_post_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Post"/>
+</LinearLayout>

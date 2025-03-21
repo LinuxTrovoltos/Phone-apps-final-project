@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">AroundMe</string>
+    <string name="logout">Log Out</string>
+    <string name="welcome_message">Welcome Back!</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="web_client_id">714405768539-7ac2flg5lodh6bj4s4bvj3r7g16qdq35.apps.googleusercontent.com</string>
+
 </resources>
