@@ -23,7 +23,7 @@
         <activity
             android:name=".activities.MapActivity"
             android:exported="true"
-            android:theme="@style/Theme.AroundMe">
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -47,7 +47,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="ffffffffffffffffffffffffffff"/>
+            android:value="AIzaSyCTPBItw7pZ2-hr5rSz0k1wxMOFQd-7its"/>
 
     </application>
 
