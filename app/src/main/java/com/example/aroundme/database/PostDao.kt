@@ -1,30 +1,22 @@
 package com.example.aroundme.database
 
 import androidx.room.*
-import com.example.aroundme.models.Post
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PostDao {
+    @Query("SELECT * FROM posts")
+    fun getAllPosts(): Flow<List<PostEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPost(post: Post)
-
-    @Query("SELECT * FROM posts ORDER BY updatedAt DESC")
-    suspend fun getAllPosts(): List<Post>
-
-    @Query("SELECT * FROM posts ORDER BY updatedAt DESC")
-    fun getLivePosts(): Flow<List<Post>>
+    suspend fun upsert(post: PostEntity)
 
     @Query("SELECT * FROM posts WHERE isSynced = 0")
-    suspend fun getUnsyncedPosts(): List<Post>
+    suspend fun getUnsyncedPosts(): List<PostEntity>
 
-    @Query("DELETE FROM posts")
-    suspend fun deleteAllPosts()
+    @Query("UPDATE posts SET isSynced = 1 WHERE id = :id")
+    suspend fun markSynced(id: String)
 
-    @Query("SELECT * FROM posts WHERE id = :postId")
-    suspend fun getPostById(postId: String): Post?
-
-    @Query("SELECT * FROM posts WHERE title LIKE '%' || :query || '%' OR category = :category")
-    suspend fun searchPosts(query: String, category: String): List<Post>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(posts: List<PostEntity>)
 }

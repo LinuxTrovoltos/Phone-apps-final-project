@@ -4,7 +4,8 @@ import com.example.aroundme.models.Post
 import kotlinx.coroutines.flow.Flow
 
 interface PostRepository {
-    fun getAllPosts(): Flow<List<Post>>
-    suspend fun addOrUpdatePost(post: Post)
-    suspend fun syncPendingPosts()
+    fun getPosts(): Flow<List<Post>>
+    suspend fun createPost(post: Post)
+    suspend fun syncPosts()
+    suspend fun fetchRemotePosts()
 }

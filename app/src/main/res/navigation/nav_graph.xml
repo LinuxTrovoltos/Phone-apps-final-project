@@ -38,6 +38,7 @@
         android:name="com.example.aroundme.ui.signup.SignUpFragment"
         android:label="SignUp"
         tools:layout="@layout/fragment_sign_up">
+        <!-- ADD THIS ACTION: -->
         <action
             android:id="@+id/action_signUpFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -80,4 +81,60 @@
         android:name="com.example.aroundme.ui.profile.EditProfileFragment"
         android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.aroundme.ui.map.MapFragment"
+        android:label="Map"
+        tools:layout="@layout/fragment_map">
+
+        <action
+            android:id="@+id/action_mapFragment_to_postListFragment"
+            app:destination="@id/postListFragment" />
+
+<!--        <action-->
+<!--            android:id="@+id/action_mapFragment_to_createEditPostFragment"-->
+<!--            app:destination="@id/createEditPostFragment" />-->
+    </fragment>
+
+    <!-- Post List Fragment -->
+    <fragment
+        android:id="@+id/postListFragment"
+        android:name="com.example.aroundme.ui.post.PostListFragment"
+        android:label="Post List"
+        tools:layout="@layout/fragment_post_list">
+
+        <action
+            android:id="@+id/action_postListFragment_to_postDetailFragment"
+            app:destination="@id/postDetailFragment" />
+    </fragment>
+
+    <!-- Post Detail Fragment -->
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="com.example.aroundme.ui.post.PostDetailFragment"
+        android:label="Post Detail"
+        tools:layout="@layout/fragment_post_detail">
+
+        <argument
+            android:name="postId"
+            app:argType="string"
+            android:defaultValue=""
+            app:nullable="false" />
+    </fragment>
+
+    <!-- Create/Edit Post Fragment -->
+<!--    <fragment-->
+<!--        android:id="@+id/createEditPostFragment"-->
+<!--        android:name="com.example.aroundme.ui.post.CreateEditPostFragment"-->
+<!--        android:label="Create or Edit Post"-->
+<!--        tools:layout="@layout/fragment_create_edit_post">-->
+
+<!--        <argument-->
+<!--            android:name="postId"-->
+<!--            app:argType="string"-->
+<!--            app:nullable="true"-->
+<!--            android:defaultValue="@null" />-->
+<!--    </fragment>-->
+
+
 </navigation>

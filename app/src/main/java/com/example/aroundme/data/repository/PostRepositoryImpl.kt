@@ -1,43 +1,40 @@
 package com.example.aroundme.data.repository
 
 import com.example.aroundme.database.PostDao
+import com.example.aroundme.utils.toDomain
+import com.example.aroundme.utils.toEntity
 import com.example.aroundme.domain.repository.PostRepository
 import com.example.aroundme.models.Post
-import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.Dispatchers
+import com.example.aroundme.data.repository.firebase.FirebasePostDataSource
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class PostRepositoryImpl(
+class PostRepositoryImpl @Inject constructor(
     private val dao: PostDao,
-    private val firestore: FirebaseFirestore
+    private val firebase: FirebasePostDataSource
 ) : PostRepository {
 
-    override fun getAllPosts(): Flow<List<Post>> {
-        return dao.getLivePosts()
+    override fun getPosts(): Flow<List<Post>> = dao.getAllPosts()
+        .map { list -> list.map { it.toDomain() } }
+
+    override suspend fun createPost(post: Post) {
+        dao.upsert(post.toEntity().copy(isSynced = false))
     }
 
-    override suspend fun addOrUpdatePost(post: Post) {
-        dao.insertPost(post.copy(isSynced = false))
-    }
-
-    override suspend fun syncPendingPosts() = withContext(Dispatchers.IO) {
-        val unsyncedPosts = dao.getUnsyncedPosts()
-
-        for (post in unsyncedPosts) {
-            try {
-                firestore.collection("posts")
-                    .document(post.id)
-                    .set(post)
-                    .await()  // ✅ suspends instead of using callbacks
-
-                dao.insertPost(post.copy(isSynced = true))
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-                // You could log or mark the post as failed if needed
+    override suspend fun syncPosts() {
+        val unsynced = dao.getUnsyncedPosts()
+        unsynced.forEach {
+            val post = it.toDomain()
+            if (firebase.uploadPost(post)) {
+                dao.markSynced(post.id)
             }
+        }
+    }
+
+    override suspend fun fetchRemotePosts() {
+        firebase.getPosts().collect { remote ->
+            dao.insertAll(remote.map { it.toEntity() })
         }
     }
 }
