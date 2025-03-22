@@ -38,6 +38,7 @@
         android:name="com.example.aroundme.ui.signup.SignUpFragment"
         android:label="SignUp"
         tools:layout="@layout/fragment_sign_up">
+        <!-- ADD THIS ACTION: -->
         <action
             android:id="@+id/action_signUpFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -57,6 +58,9 @@
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_createPostFragment"
+            app:destination="@id/createPostFragment" />
     </fragment>
 
     <fragment
@@ -80,4 +84,13 @@
         android:name="com.example.aroundme.ui.profile.EditProfileFragment"
         android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile" />
+
+
+
+
+    <fragment
+        android:id="@+id/createPostFragment"
+        android:name="com.example.aroundme.ui.post.CreatePostFragment"
+        android:label="Create Post" />
+
 </navigation>

@@ -1,0 +1,28 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Drop shadow -->
+    <item android:right="2dp" android:left="2dp" android:top="2dp" android:bottom="6dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#44000000"/>
+            <corners android:radius="12dp"/>
+        </shape>
+    </item>
+
+    <!-- Main balloon -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/white"/>
+            <corners android:radius="12dp"/>
+        </shape>
+    </item>
+
+    <!-- Pointer -->
+    <item android:top="100dp" android:gravity="bottom">
+        <rotate android:fromDegrees="45">
+            <shape android:shape="rectangle">
+                <solid android:color="@android:color/white"/>
+                <size android:width="16dp" android:height="16dp"/>
+            </shape>
+        </rotate>
+    </item>
+</layer-list>

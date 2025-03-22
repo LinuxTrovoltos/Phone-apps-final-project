@@ -1,52 +1,37 @@
 package com.example.aroundme.adapters
-//
-//import android.view.LayoutInflater
-//import android.view.View
-//import android.view.ViewGroup
-//import android.widget.TextView
-//import androidx.recyclerview.widget.DiffUtil
-//import androidx.recyclerview.widget.RecyclerView
-//import com.example.aroundme.R
-//import com.example.aroundme.models.Post
-//
-//class PostAdapter(private var postList: List<Post>) :
-//    RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-//        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_post, parent, false)
-//        return PostViewHolder(view)
-//    }
-//
-//    override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-//        val post = postList[position]
-//        holder.title.text = post.title
-//        holder.description.text = post.description
-//    }
-//
-//    override fun getItemCount(): Int = postList.size
-//
-//    fun updateData(newList: List<Post>) {
-//        val diffResult = DiffUtil.calculateDiff(PostDiffCallback(postList, newList))
-//        postList = newList
-//        diffResult.dispatchUpdatesTo(this)
-//    }
-//
-//    class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//        val title: TextView = itemView.findViewById(R.id.post_title)
-//        val description: TextView = itemView.findViewById(R.id.post_description)
-//    }
-//
-//    class PostDiffCallback(private val oldList: List<Post>, private val newList: List<Post>) :
-//        DiffUtil.Callback() {
-//        override fun getOldListSize(): Int = oldList.size
-//        override fun getNewListSize(): Int = newList.size
-//
-//        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-//            return oldList[oldItemPosition].title == newList[newItemPosition].title
-//        }
-//
-//        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-//            return oldList[oldItemPosition] == newList[newItemPosition]
-//        }
-//    }
-//}
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.example.aroundme.databinding.PostItemLayoutBinding
+import com.example.aroundme.models.Post
+
+class PostAdapter(
+    private val onItemClick: (Post) -> Unit
+) : ListAdapter<Post, PostAdapter.PostViewHolder>(DIFF_CALLBACK) {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
+        val binding = PostItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return PostViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
+
+    inner class PostViewHolder(private val binding: PostItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(post: Post) {
+            binding.postTitle.text = post.title
+            itemView.setOnClickListener { onItemClick(post) }
+        }
+    }
+
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Post>() {
+            override fun areItemsTheSame(oldItem: Post, newItem: Post) = oldItem.id == newItem.id
+            override fun areContentsTheSame(oldItem: Post, newItem: Post) = oldItem == newItem
+        }
+    }
+}
