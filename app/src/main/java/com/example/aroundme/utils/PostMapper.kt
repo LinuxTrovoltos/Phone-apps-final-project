@@ -25,5 +25,5 @@ fun Post.toEntity(): PostEntity = PostEntity(
     creatorId = creatorId,
     timestamp = timestamp,
     category = category,
-    isSynced = false // New posts default to unsynced
+    isSynced = true // New posts default to unsynced
 )

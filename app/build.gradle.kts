@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
+    id("org.jetbrains.kotlin.kapt")
+    id ("dagger.hilt.android.plugin")
 }
 
 android {
@@ -72,6 +74,8 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.4")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.4")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+    implementation(libs.androidx.hilt.work)
+    implementation(libs.firebase.storage.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -87,6 +91,9 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx:24.9.1")
     implementation ("com.squareup.picasso:picasso:2.8")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    kapt ("com.github.bumptech.glide:compiler:4.16.0")
+    implementation ("com.google.android.libraries.places:places:3.3.0")
 
 
 

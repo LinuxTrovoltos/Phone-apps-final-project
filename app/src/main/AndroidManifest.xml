@@ -33,7 +33,11 @@
             </intent-filter>
         </activity>
 
-
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCTPBItw7pZ2-hr5rSz0k1wxMOFQd-7its"/>

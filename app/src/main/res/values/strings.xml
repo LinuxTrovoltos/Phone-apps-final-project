@@ -6,6 +6,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="continue_with_google">Continue with Google</string>
     <string name="web_client_id">714405768539-7ac2flg5lodh6bj4s4bvj3r7g16qdq35.apps.googleusercontent.com</string>
+    <string name="GOOGLE_MAPS_API_KEY">AIzaSyCTPBItw7pZ2-hr5rSz0k1wxMOFQd-7its</string>
     <string-array name="category_options">
         <item>All</item>
         <item>Sports</item>

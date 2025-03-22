@@ -13,6 +13,6 @@ data class PostEntity(
     val longitude: Double,
     val creatorId: String,
     val timestamp: Long,
-    val category: String?,
+    val category: String = "general",
     val isSynced: Boolean = false
 )

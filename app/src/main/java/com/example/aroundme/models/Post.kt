@@ -9,5 +9,5 @@ data class Post(
     val longitude: Double,
     val creatorId: String,
     val timestamp: Long,
-    val category: String?
+    val category: String = "general"
 )

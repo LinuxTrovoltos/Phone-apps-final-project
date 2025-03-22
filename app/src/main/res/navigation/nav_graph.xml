@@ -58,6 +58,9 @@
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_createPostFragment"
+            app:destination="@id/createPostFragment" />
     </fragment>
 
     <fragment
@@ -81,20 +84,7 @@
         android:name="com.example.aroundme.ui.profile.EditProfileFragment"
         android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile" />
-    <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.example.aroundme.ui.map.MapFragment"
-        android:label="Map"
-        tools:layout="@layout/fragment_map">
-
-        <action
-            android:id="@+id/action_mapFragment_to_postListFragment"
-            app:destination="@id/postListFragment" />
-
-<!--        <action-->
-<!--            android:id="@+id/action_mapFragment_to_createEditPostFragment"-->
-<!--            app:destination="@id/createEditPostFragment" />-->
-    </fragment>
+    
 
     <!-- Post List Fragment -->
     <fragment
@@ -122,19 +112,10 @@
             app:nullable="false" />
     </fragment>
 
-    <!-- Create/Edit Post Fragment -->
-<!--    <fragment-->
-<!--        android:id="@+id/createEditPostFragment"-->
-<!--        android:name="com.example.aroundme.ui.post.CreateEditPostFragment"-->
-<!--        android:label="Create or Edit Post"-->
-<!--        tools:layout="@layout/fragment_create_edit_post">-->
-
-<!--        <argument-->
-<!--            android:name="postId"-->
-<!--            app:argType="string"-->
-<!--            app:nullable="true"-->
-<!--            android:defaultValue="@null" />-->
-<!--    </fragment>-->
+    <fragment
+        android:id="@+id/createPostFragment"
+        android:name="com.example.aroundme.ui.post.CreatePostFragment"
+        android:label="Create Post" />
 
 
 </navigation>

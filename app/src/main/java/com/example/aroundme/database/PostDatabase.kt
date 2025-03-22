@@ -6,18 +6,18 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [PostEntity::class], version = 1, exportSchema = false)
-abstract class AppDatabase : RoomDatabase() {
+abstract class PostDatabase : RoomDatabase() {
     abstract fun postDao(): PostDao
 
     companion object {
         @Volatile
-        private var INSTANCE: AppDatabase? = null
+        private var INSTANCE: PostDatabase? = null
 
-        fun getInstance(context: Context): AppDatabase {
+        fun getInstance(context: Context): PostDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    AppDatabase::class.java,
+                    PostDatabase::class.java,
                     "around_me.db"
                 ).build()
                 INSTANCE = instance

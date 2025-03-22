@@ -10,14 +10,14 @@ import dagger.assisted.AssistedInject
 
 @HiltWorker
 class PostSyncWorker @AssistedInject constructor(
-    private val repo: PostRepository,
-    @Assisted appContext: Context,
-    @Assisted params: WorkerParameters
-) : CoroutineWorker(appContext, params) {
+    @Assisted context: Context,
+    @Assisted params: WorkerParameters,
+    private val postRepository: PostRepository
+) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
         return try {
-            repo.syncPosts()
+            postRepository.syncPosts()
             Result.success()
         } catch (e: Exception) {
             Result.retry()
