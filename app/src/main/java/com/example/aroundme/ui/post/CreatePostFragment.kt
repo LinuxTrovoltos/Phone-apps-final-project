@@ -53,17 +53,6 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
 
         binding.etLocation.setOnClickListener { launchAddressAutocomplete() }
 
-        binding.etCategoryInput.setOnEditorActionListener { v, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                val text = v.text.toString().trim()
-                if (text.isNotEmpty()) {
-                    addCategoryChip(text)
-                    v.text = null
-                }
-                true
-            } else false
-        }
-
         binding.btnSubmit.setOnClickListener { submitPost() }
     }
 
@@ -91,26 +80,6 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun addCategoryChip(label: String) {
-        val chip = Chip(requireContext()).apply {
-            text = label
-            isCloseIconVisible = true
-            setOnCloseIconClickListener {
-                binding.chipGroupCategories.removeView(this)
-            }
-        }
-        binding.chipGroupCategories.addView(chip)
-    }
-
-    private fun collectCategories(): List<String> {
-        val list = mutableListOf<String>()
-        for (i in 0 until binding.chipGroupCategories.childCount) {
-            val chip = binding.chipGroupCategories.getChildAt(i) as? Chip
-            chip?.let { list.add(it.text.toString()) }
-        }
-        return if (list.isEmpty()) listOf("general") else list
-    }
-
     private fun submitPost() {
         val title = binding.etTitle.text.toString().trim()
         val description = binding.etDescription.text.toString().trim()
@@ -133,9 +102,17 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
             category = selectedCategoryOrDefault()
         )
 
-        viewModel.createPost(post, selectedImageUri)
-        Toast.makeText(requireContext(), "Post submitted", Toast.LENGTH_SHORT).show()
-        findNavController().navigateUp()
+        binding.btnSubmit.isEnabled = false
+
+        viewModel.createPost(post, selectedImageUri) { success ->
+            binding.btnSubmit.isEnabled = true
+            if (success) {
+                Toast.makeText(requireContext(), "Post submitted!", Toast.LENGTH_SHORT).show()
+                findNavController().navigateUp()
+            } else {
+                Toast.makeText(requireContext(), "Post failed to upload", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -144,10 +121,12 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
     }
 
     private fun selectedCategoryOrDefault(): String {
-        val chip = binding.chipGroupCategories.checkedChipId
-        val label = binding.chipGroupCategories.findViewById<Chip>(chip)?.text?.toString()
-        return label ?: "general"
+        val chipId = binding.chipGroupCategories.checkedChipId
+        val chip = binding.chipGroupCategories.findViewById<Chip>(chipId)
+        return chip?.text?.toString() ?: "general"
     }
+
+
 
 
     companion object {

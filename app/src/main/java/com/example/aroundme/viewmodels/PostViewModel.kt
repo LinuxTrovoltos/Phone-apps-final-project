@@ -1,9 +1,13 @@
 package com.example.aroundme.viewmodels
 
 import android.net.Uri
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.aroundme.models.Post
-import com.example.aroundme.domain.repository.PostRepository
+import com.example.aroundme.database.PostWithUser
+import com.example.aroundme.data.repository.PostRepositoryImpl
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -12,44 +16,49 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PostViewModel @Inject constructor(
-    private val repository: PostRepository
+    private val postRepository: PostRepositoryImpl
 ) : ViewModel() {
 
-    val currentUserId: String = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
+    private val _allPosts = MutableStateFlow<List<PostWithUser>>(emptyList())
+    private val _categoryFilter = MutableStateFlow("All")
+    private val _filterMyPosts = MutableStateFlow(false)
 
-    private val _selectedCategory = MutableStateFlow<String?>("All")
-    val selectedCategory: StateFlow<String?> = _selectedCategory
-
-    private val _filterByUserId = MutableStateFlow<String?>(null)
-
-    val filteredPosts: LiveData<List<Post>> = combine(
-        repository.getPosts(),
-        _selectedCategory,
-        _filterByUserId
-    ) { posts, category, userId ->
-        posts.filter { post ->
-            (category == "All" || post.category == category) &&
-                    (userId == null || post.creatorId == userId)
+    val postsWithUser: LiveData<List<PostWithUser>> = combine(
+        _allPosts, _categoryFilter, _filterMyPosts
+    ) { posts, category, onlyMine ->
+        posts.filter { postWithUser ->
+            val matchesUser = !onlyMine || postWithUser.post.creatorId == currentUserId
+            val matchesCategory = category == "All" || postWithUser.post.category.equals(category, ignoreCase = true)
+            matchesUser && matchesCategory
         }
     }.asLiveData()
 
-    fun createPost(post: Post, imageUri: Uri?) {
+
+    init {
         viewModelScope.launch {
-            repository.createPost(post, imageUri)
+            postRepository.syncPosts()
+            postRepository.getPostsWithUser().collect {
+                _allPosts.value = it
+            }
         }
     }
 
-    fun deletePost(postId: String) {
-        viewModelScope.launch {
-            repository.deletePost(postId)
-        }
-    }
 
     fun setCategoryFilter(category: String) {
-        _selectedCategory.value = category
+        _categoryFilter.value = category
     }
 
-    fun setUserFilter(userId: String?) {
-        _filterByUserId.value = userId
+    fun createPost(post: Post, imageUri: Uri?, onComplete: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val result = postRepository.createPost(post, imageUri)
+            onComplete(result.isSuccess)
+        }
     }
+
+    fun filterOnlyMyPosts(onlyMine: Boolean) {
+        _filterMyPosts.value = onlyMine
+    }
+
+    val currentUserId: String
+        get() = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
 }

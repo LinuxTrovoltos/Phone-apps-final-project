@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface PostRepository {
     fun getPosts(): Flow<List<Post>>
     fun getPostsWithUser(): Flow<List<PostWithUser>>
-    suspend fun createPost(post: Post, imageUri: Uri?)
+    suspend fun createPost(post: Post, imageUri: Uri?): Result<Unit>
     suspend fun deletePost(postId: String)
     suspend fun syncPosts()
     suspend fun fetchRemotePosts()

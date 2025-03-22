@@ -30,7 +30,7 @@ class AroundMeApplication : Application(), Configuration.Provider {
 
     private fun scheduleSyncWorker() {
         val workRequest = PeriodicWorkRequestBuilder<PostSyncWorker>(
-            15, TimeUnit.MINUTES
+            1, TimeUnit.MINUTES
         ).setConstraints(
             Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)

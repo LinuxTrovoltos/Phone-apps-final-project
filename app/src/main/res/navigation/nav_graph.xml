@@ -84,38 +84,13 @@
         android:name="com.example.aroundme.ui.profile.EditProfileFragment"
         android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile" />
-    
 
-    <!-- Post List Fragment -->
-    <fragment
-        android:id="@+id/postListFragment"
-        android:name="com.example.aroundme.ui.post.PostListFragment"
-        android:label="Post List"
-        tools:layout="@layout/fragment_post_list">
 
-        <action
-            android:id="@+id/action_postListFragment_to_postDetailFragment"
-            app:destination="@id/postDetailFragment" />
-    </fragment>
 
-    <!-- Post Detail Fragment -->
-    <fragment
-        android:id="@+id/postDetailFragment"
-        android:name="com.example.aroundme.ui.post.PostDetailFragment"
-        android:label="Post Detail"
-        tools:layout="@layout/fragment_post_detail">
-
-        <argument
-            android:name="postId"
-            app:argType="string"
-            android:defaultValue=""
-            app:nullable="false" />
-    </fragment>
 
     <fragment
         android:id="@+id/createPostFragment"
         android:name="com.example.aroundme.ui.post.CreatePostFragment"
         android:label="Create Post" />
-
 
 </navigation>

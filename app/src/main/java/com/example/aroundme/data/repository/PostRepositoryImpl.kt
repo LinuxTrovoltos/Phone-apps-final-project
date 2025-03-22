@@ -32,17 +32,31 @@ class PostRepositoryImpl @Inject constructor(
         }
 
 
-    override suspend fun createPost(post: Post, imageUri: Uri?) {
-        val imageUrl = imageUri?.let { firebase.uploadImage(it, post.id) }
-        val finalPost = post.copy(imageUrl = imageUrl)
+    override suspend fun createPost(post: Post, imageUri: Uri?): Result<Unit> {
+        return try {
+            val imageUrl = imageUri?.let {
+                firebase.uploadImage(it, post.id) // may throw
+            }
 
-        postDao.upsert(finalPost.toEntity().copy(isSynced = false))
+            val finalPost = post.copy(imageUrl = imageUrl)
 
-        val success = firebase.uploadPost(finalPost)
-        if (success) {
-            postDao.markSynced(post.id)
+            // Always cache locally first
+            postDao.upsert(finalPost.toEntity().copy(isSynced = false))
+
+            // Try to upload to Firestore
+            val success = firebase.uploadPost(finalPost)
+
+            if (success) {
+                postDao.markSynced(post.id)
+                Result.success(Unit)
+            }
+            Result.success(Unit)
+
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
+
 
     override suspend fun deletePost(postId: String) {
         firebase.deletePost(postId)
