@@ -8,56 +8,86 @@
     android:background="@drawable/gradient_background"
     tools:context=".ui.welcome.WelcomeFragment">
 
-    <!-- Glassmorphic Card -->
+    <!-- Guidelines for Centered Layout -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.07" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.92" />
+
     <LinearLayout
         android:id="@+id/welcomeCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
-        android:padding="32dp"
-        android:background="@drawable/glass_background"
         android:elevation="10dp"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
+        android:padding="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.498">
 
         <!-- Welcome Text -->
         <TextView
             android:id="@+id/tvWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AroundMe"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
+            android:layout_marginBottom="24dp"
             android:gravity="center"
-            android:layout_marginBottom="24dp"/>
-
+            android:text="AroundMe"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <!-- Login Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
+            android:layout_width="215dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/glass_button"
             android:text="Login"
-            android:textStyle="bold"
-            android:backgroundTint="@color/blue"
             android:textColor="@android:color/white"
-            android:layout_marginBottom="8dp"/>
+            android:textStyle="bold" />
 
         <!-- Sign-Up Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSignUp"
-            android:layout_width="match_parent"
+            android:layout_width="215dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/glass_button"
             android:text="Sign Up"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <!-- Google Sign-In Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnGoogleSignIn"
+            android:layout_width="215dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/glass_button"
+            android:text="Continue with Google"
+            android:textColor="@android:color/white"
             android:textStyle="bold"
-            android:backgroundTint="@android:color/white"
-            android:textColor="@color/blue"
-            android:layout_marginBottom="8dp"/>
-
-
+            app:cornerRadius="24dp"
+            app:icon="@drawable/ic_google"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@null" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

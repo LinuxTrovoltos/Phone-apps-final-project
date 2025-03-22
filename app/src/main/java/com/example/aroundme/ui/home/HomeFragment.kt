@@ -31,6 +31,10 @@ class HomeFragment : Fragment() {
             auth.signOut()
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToWelcomeFragment())
         }
+
+        binding.btnProfile.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProfileFragment())
+        }
     }
 
     override fun onDestroyView() {

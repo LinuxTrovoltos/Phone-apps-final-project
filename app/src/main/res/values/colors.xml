@@ -5,4 +5,8 @@
     <color name="glass_background">#80FFFFFF</color> <!-- Semi-transparent white -->
     <color name="primary_gradient_start">#8503FF</color>
     <color name="primary_gradient_end">#5203FF</color>
+    <color name="glass_button">#554285F4</color> <!-- translucent blue with alpha -->
+    <color name="navBarDark">#661A1A1A</color> <!-- Dark semi-transparent background -->
+    <color name="iconLight">#D9FFFFFF</color> <!-- Soft white icons -->
+
 </resources>
